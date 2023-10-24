@@ -37,18 +37,23 @@
           <button type="submit" v-bind:disabled="disabled">登録</button>
         </div>
       </form>
-      <div>text: {{ text }}</div>
       <!-- Todo入力フォーム End -->
       <!-- Todoリスト Begin -->
       <table id="todo-table">
         <tbody id="todo-main">
           <tr v-for="todo in filterTodos" v-bind:key="todo.id">
             <td class="cell-done">
-              <label v-bind:class="{'-active': todo.done }">
-                <input type="checkbox" v-on:click="toggleTodo(todo.id)" />
+              <label v-bind:class="{ '-active': todo.done }">
+                <input v-model="todo.done" type="checkbox" />
               </label>
             </td>
-            <td class="cell-text">{{ todo.text }}</td>
+            <td class="cell-text" v-if="todo.isEditing">
+              <input v-model="todo.text" />
+              <button v-on:click="saveTodo(todo.id)">保存</button>
+            </td>
+            <td class="cell-text" v-else v-on:click="editTodo(todo.id)">
+              {{ todo.text }}
+            </td>
             <td class="cell-created-at">{{ formatDate(todo.createdAt) }}</td>
           </tr>
         </tbody>

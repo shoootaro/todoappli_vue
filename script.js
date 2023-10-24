@@ -9,22 +9,25 @@ function createApp(){
           id: 1,
           text: "出かける準備する",
           createdAt: 1567940003455,
-          done: false
+          done: false,
+          isEditing: false
         },
         {
           id: 2,
           text: "着替える",
           createdAt: 1567940009999,
-          done: false
+          done: false,
+          isEditing: false
         },
         {
           id: 3,
           text: "ルンバ起動する",
           createdAt: 1567940099999,
-          done: true
-        },
+          done: true,
+          isEditing: false
+        }
       ],
-      text:""
+      text: ""
     },
     computed: {
       todoLength: function(){
@@ -70,7 +73,24 @@ function createApp(){
           id: this.todosLength + 1,
           text: text,
           createdAt: Date.now(),
-          done: false
+          done: false,
+          isEditing: false
+        })
+      },
+      editTodo: function(id){
+        this.todos = this.todos.map(function(todo){
+          if(todo.id === id){
+            todo.isEditing = true
+          }
+          return todo
+        })
+      },
+      saveTodo: function(id){
+        this.todos = this.todos.map(function(todo){
+          if(todo.id === id){
+            todo.isEditing = false
+          }
+          return todo
         })
       }
     }
